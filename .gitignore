@@ -1,0 +1,13 @@
+# WordPress: no subir archivos internos
+/reparaya-producto1/www/wordpress/
+
+# Archivos privados
+.env
+config.php
+*.sql
+
+# Dependencias y archivos temporales
+.DS_Store
+Thumbs.db
+# Archivos privados
+CONTRASEÑAS.txt
