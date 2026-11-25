@@ -1,13 +1,24 @@
-# WordPress: no subir archivos internos
+﻿# WordPress: no subir archivos internos
 /reparaya-producto1/www/wordpress/
 
 # Archivos privados
+CONTRASEÑAS.txt
 .env
+.env.*
+!.env.example
+*.env
 config.php
-*.sql
 
-# Dependencias y archivos temporales
+# Bases de datos y archivos temporales
+*.sql
 .DS_Store
 Thumbs.db
-# Archivos privados
-CONTRASE�AS.txt
+*.log
+*.bak
+
+# Dependencias
+vendor/
+node_modules/
+
+# WordPress accidental dentro de Producto 3
+/reparaya-producto3/paquete/laravel/www/wordpress/

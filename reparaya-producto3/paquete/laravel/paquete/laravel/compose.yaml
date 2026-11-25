@@ -1,0 +1,42 @@
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: entrega-web
+    container_name: reparaya3_web
+    ports:
+      - "8083:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: reparaya3_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:?Falta DB_DATABASE en .env}"
+      MYSQL_USER: "${DB_USERNAME:?Falta DB_USERNAME en .env}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:?Falta DB_PASSWORD en .env}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?Falta DB_ROOT_PASSWORD en .env}"
+    ports:
+      - "3308:3306"
+    volumes:
+      - reparaya3_db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: reparaya3_pma
+    restart: unless-stopped
+    ports:
+      - "8084:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+
+volumes:
+  reparaya3_db_data:
