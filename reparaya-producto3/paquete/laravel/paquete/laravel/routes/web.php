@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GestoraController;
 use App\Http\Controllers\GestoraPanelController;
 use App\Http\Controllers\ComisionController;
+use App\Http\Controllers\GestoraComisionController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\IncidenciaController;
@@ -55,19 +56,16 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('comunidades', ComunidadController::class)
         ->except(['show']);
 
+    // Consulta de comisiones: sin creacion manual.
     Route::get('/comisiones', [ComisionController::class, 'index'])
         ->name('comisiones.index');
-    Route::get('/comisiones/create', [ComisionController::class, 'create'])
-        ->name('comisiones.create');
-    Route::post('/comisiones', [ComisionController::class, 'store'])
-        ->name('comisiones.store');
 });
 
 Route::middleware('auth')->prefix('gestora')->name('gestora.')->group(function () {
     Route::get('/', [GestoraPanelController::class, 'index'])
         ->name('panel');
 
-    // Gestión de comunidades
+    // Gestion de comunidades
     Route::get('/comunidades', [GestoraComunidadController::class, 'index'])
         ->name('comunidades.index');
 
@@ -86,7 +84,7 @@ Route::middleware('auth')->prefix('gestora')->name('gestora.')->group(function (
     Route::delete('/comunidades/{id}', [GestoraComunidadController::class, 'destroy'])
         ->name('comunidades.destroy');
 
-    // Gestión de incidencias
+    // Gestion de incidencias
     Route::get('/incidencias', [GestoraIncidenciaController::class, 'index'])
         ->name('incidencias.index');
 
@@ -95,6 +93,13 @@ Route::middleware('auth')->prefix('gestora')->name('gestora.')->group(function (
 
     Route::post('/incidencias', [GestoraIncidenciaController::class, 'store'])
         ->name('incidencias.store');
+
+    // Comisiones y liquidaciones de la gestora
+    Route::get('/comisiones', [GestoraComisionController::class, 'index'])
+        ->name('comisiones.index');
+
+    Route::get('/liquidaciones', [GestoraComisionController::class, 'liquidaciones'])
+        ->name('liquidaciones');
 });
 
 Route::middleware('auth')->group(function () {
@@ -104,13 +109,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/reparaya/solicitudes', [SolicitudController::class, 'index'])
         ->name('reparaya.solicitudes.index');
+
     Route::get('/reparaya/solicitudes/crear', [SolicitudController::class, 'create'])
         ->name('reparaya.solicitudes.create');
+
     Route::post('/reparaya/solicitudes', [SolicitudController::class, 'store'])
         ->name('reparaya.solicitudes.store');
 
     Route::get('/reparaya/perfil', [PerfilController::class, 'edit'])
         ->name('reparaya.perfil');
+
     Route::put('/reparaya/perfil', [PerfilController::class, 'update'])
         ->name('reparaya.perfil.update');
 

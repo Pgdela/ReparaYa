@@ -53,6 +53,15 @@
             <p>Tu empresa todavía no tiene comunidades asignadas.</p>
         @endforelse
     </section>
+    <a href="{{ route('gestora.comisiones.index') }}"
+   style="display:inline-block;background:#176b62;color:white;padding:12px 18px;border-radius:6px;text-decoration:none;margin:5px;">
+    Consultar mis comisiones
+</a>
+
+<a href="{{ route('gestora.liquidaciones') }}"
+   style="display:inline-block;background:#176b62;color:white;padding:12px 18px;border-radius:6px;text-decoration:none;margin:5px;">
+    Liquidaciones mensuales
+</a>
 </main>
 </body>
 </html>
